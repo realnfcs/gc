@@ -139,10 +139,24 @@ CMakeFiles/Tutorial.dir/src/Model.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Tutorial.dir/src/Model.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/realnfcs/codes/gc/tutorial/src/Model.cpp -o CMakeFiles/Tutorial.dir/src/Model.cpp.s
 
+CMakeFiles/Tutorial.dir/src/SDL2.cpp.o: CMakeFiles/Tutorial.dir/flags.make
+CMakeFiles/Tutorial.dir/src/SDL2.cpp.o: ../src/SDL2.cpp
+CMakeFiles/Tutorial.dir/src/SDL2.cpp.o: CMakeFiles/Tutorial.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Tutorial.dir/src/SDL2.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tutorial.dir/src/SDL2.cpp.o -MF CMakeFiles/Tutorial.dir/src/SDL2.cpp.o.d -o CMakeFiles/Tutorial.dir/src/SDL2.cpp.o -c /home/realnfcs/codes/gc/tutorial/src/SDL2.cpp
+
+CMakeFiles/Tutorial.dir/src/SDL2.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Tutorial.dir/src/SDL2.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/realnfcs/codes/gc/tutorial/src/SDL2.cpp > CMakeFiles/Tutorial.dir/src/SDL2.cpp.i
+
+CMakeFiles/Tutorial.dir/src/SDL2.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Tutorial.dir/src/SDL2.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/realnfcs/codes/gc/tutorial/src/SDL2.cpp -o CMakeFiles/Tutorial.dir/src/SDL2.cpp.s
+
 CMakeFiles/Tutorial.dir/src/Texture.cpp.o: CMakeFiles/Tutorial.dir/flags.make
 CMakeFiles/Tutorial.dir/src/Texture.cpp.o: ../src/Texture.cpp
 CMakeFiles/Tutorial.dir/src/Texture.cpp.o: CMakeFiles/Tutorial.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Tutorial.dir/src/Texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Tutorial.dir/src/Texture.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tutorial.dir/src/Texture.cpp.o -MF CMakeFiles/Tutorial.dir/src/Texture.cpp.o.d -o CMakeFiles/Tutorial.dir/src/Texture.cpp.o -c /home/realnfcs/codes/gc/tutorial/src/Texture.cpp
 
 CMakeFiles/Tutorial.dir/src/Texture.cpp.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/Tutorial.dir/src/Texture.cpp.s: cmake_force
 CMakeFiles/Tutorial.dir/src/VAO.cpp.o: CMakeFiles/Tutorial.dir/flags.make
 CMakeFiles/Tutorial.dir/src/VAO.cpp.o: ../src/VAO.cpp
 CMakeFiles/Tutorial.dir/src/VAO.cpp.o: CMakeFiles/Tutorial.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Tutorial.dir/src/VAO.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Tutorial.dir/src/VAO.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tutorial.dir/src/VAO.cpp.o -MF CMakeFiles/Tutorial.dir/src/VAO.cpp.o.d -o CMakeFiles/Tutorial.dir/src/VAO.cpp.o -c /home/realnfcs/codes/gc/tutorial/src/VAO.cpp
 
 CMakeFiles/Tutorial.dir/src/VAO.cpp.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/Tutorial.dir/src/VAO.cpp.s: cmake_force
 CMakeFiles/Tutorial.dir/src/VBO.cpp.o: CMakeFiles/Tutorial.dir/flags.make
 CMakeFiles/Tutorial.dir/src/VBO.cpp.o: ../src/VBO.cpp
 CMakeFiles/Tutorial.dir/src/VBO.cpp.o: CMakeFiles/Tutorial.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Tutorial.dir/src/VBO.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Tutorial.dir/src/VBO.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tutorial.dir/src/VBO.cpp.o -MF CMakeFiles/Tutorial.dir/src/VBO.cpp.o.d -o CMakeFiles/Tutorial.dir/src/VBO.cpp.o -c /home/realnfcs/codes/gc/tutorial/src/VBO.cpp
 
 CMakeFiles/Tutorial.dir/src/VBO.cpp.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/Tutorial.dir/src/VBO.cpp.s: cmake_force
 CMakeFiles/Tutorial.dir/src/main.cpp.o: CMakeFiles/Tutorial.dir/flags.make
 CMakeFiles/Tutorial.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/Tutorial.dir/src/main.cpp.o: CMakeFiles/Tutorial.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Tutorial.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Tutorial.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tutorial.dir/src/main.cpp.o -MF CMakeFiles/Tutorial.dir/src/main.cpp.o.d -o CMakeFiles/Tutorial.dir/src/main.cpp.o -c /home/realnfcs/codes/gc/tutorial/src/main.cpp
 
 CMakeFiles/Tutorial.dir/src/main.cpp.i: cmake_force
@@ -198,7 +212,7 @@ CMakeFiles/Tutorial.dir/src/main.cpp.s: cmake_force
 CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o: CMakeFiles/Tutorial.dir/flags.make
 CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o: ../src/shaderClass.cpp
 CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o: CMakeFiles/Tutorial.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o -MF CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o.d -o CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o -c /home/realnfcs/codes/gc/tutorial/src/shaderClass.cpp
 
 CMakeFiles/Tutorial.dir/src/shaderClass.cpp.i: cmake_force
@@ -212,7 +226,7 @@ CMakeFiles/Tutorial.dir/src/shaderClass.cpp.s: cmake_force
 CMakeFiles/Tutorial.dir/src/stb.cpp.o: CMakeFiles/Tutorial.dir/flags.make
 CMakeFiles/Tutorial.dir/src/stb.cpp.o: ../src/stb.cpp
 CMakeFiles/Tutorial.dir/src/stb.cpp.o: CMakeFiles/Tutorial.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Tutorial.dir/src/stb.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Tutorial.dir/src/stb.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tutorial.dir/src/stb.cpp.o -MF CMakeFiles/Tutorial.dir/src/stb.cpp.o.d -o CMakeFiles/Tutorial.dir/src/stb.cpp.o -c /home/realnfcs/codes/gc/tutorial/src/stb.cpp
 
 CMakeFiles/Tutorial.dir/src/stb.cpp.i: cmake_force
@@ -230,6 +244,7 @@ Tutorial_OBJECTS = \
 "CMakeFiles/Tutorial.dir/src/EBO.cpp.o" \
 "CMakeFiles/Tutorial.dir/src/Mesh.cpp.o" \
 "CMakeFiles/Tutorial.dir/src/Model.cpp.o" \
+"CMakeFiles/Tutorial.dir/src/SDL2.cpp.o" \
 "CMakeFiles/Tutorial.dir/src/Texture.cpp.o" \
 "CMakeFiles/Tutorial.dir/src/VAO.cpp.o" \
 "CMakeFiles/Tutorial.dir/src/VBO.cpp.o" \
@@ -245,6 +260,7 @@ Tutorial: CMakeFiles/Tutorial.dir/src/Camera.cpp.o
 Tutorial: CMakeFiles/Tutorial.dir/src/EBO.cpp.o
 Tutorial: CMakeFiles/Tutorial.dir/src/Mesh.cpp.o
 Tutorial: CMakeFiles/Tutorial.dir/src/Model.cpp.o
+Tutorial: CMakeFiles/Tutorial.dir/src/SDL2.cpp.o
 Tutorial: CMakeFiles/Tutorial.dir/src/Texture.cpp.o
 Tutorial: CMakeFiles/Tutorial.dir/src/VAO.cpp.o
 Tutorial: CMakeFiles/Tutorial.dir/src/VBO.cpp.o
@@ -253,10 +269,12 @@ Tutorial: CMakeFiles/Tutorial.dir/src/shaderClass.cpp.o
 Tutorial: CMakeFiles/Tutorial.dir/src/stb.cpp.o
 Tutorial: CMakeFiles/Tutorial.dir/build.make
 Tutorial: ../libraries/lib/libglfw3.a
+Tutorial: /usr/lib/x86_64-linux-gnu/libSDL2_mixer.so
+Tutorial: /usr/lib/x86_64-linux-gnu/libopenal.so
 Tutorial: /usr/lib/x86_64-linux-gnu/libGLX.so
 Tutorial: /usr/lib/x86_64-linux-gnu/libOpenGL.so
 Tutorial: CMakeFiles/Tutorial.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable Tutorial"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/realnfcs/codes/gc/tutorial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable Tutorial"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Tutorial.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

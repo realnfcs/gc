@@ -249,6 +249,30 @@ src/Model.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tutorial.dir/build.make CMakeFiles/Tutorial.dir/src/Model.cpp.s
 .PHONY : src/Model.cpp.s
 
+src/SDL2.o: src/SDL2.cpp.o
+.PHONY : src/SDL2.o
+
+# target to build an object file
+src/SDL2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tutorial.dir/build.make CMakeFiles/Tutorial.dir/src/SDL2.cpp.o
+.PHONY : src/SDL2.cpp.o
+
+src/SDL2.i: src/SDL2.cpp.i
+.PHONY : src/SDL2.i
+
+# target to preprocess a source file
+src/SDL2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tutorial.dir/build.make CMakeFiles/Tutorial.dir/src/SDL2.cpp.i
+.PHONY : src/SDL2.cpp.i
+
+src/SDL2.s: src/SDL2.cpp.s
+.PHONY : src/SDL2.s
+
+# target to generate assembly for a file
+src/SDL2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tutorial.dir/build.make CMakeFiles/Tutorial.dir/src/SDL2.cpp.s
+.PHONY : src/SDL2.cpp.s
+
 src/Texture.o: src/Texture.cpp.o
 .PHONY : src/Texture.o
 
@@ -417,6 +441,9 @@ help:
 	@echo "... src/Model.o"
 	@echo "... src/Model.i"
 	@echo "... src/Model.s"
+	@echo "... src/SDL2.o"
+	@echo "... src/SDL2.i"
+	@echo "... src/SDL2.s"
 	@echo "... src/Texture.o"
 	@echo "... src/Texture.i"
 	@echo "... src/Texture.s"
