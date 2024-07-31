@@ -9,46 +9,66 @@ const unsigned int width = 800;
 const unsigned int height = 800;
 
 // Vertices coordinates
-std::vector<Vertex> vertices = {
+std::vector<Vertex> verticesPlan = {
     // Front face
-    {{ -0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
-    {{  0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
-    {{  0.5f,  0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
-    {{ -0.5f,  0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+    //       posição             vetor normal            cor                 textura
+    {{ -10.0f, -1.0f,  -10.0f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  10.0f, -1.0f,  -10.0f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  10.0f,  0.0f,  10.0f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -10.0f,  0.0f,  10.0f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
 
-    // Back face
-    {{ -0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
-    {{  0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
-    {{  0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
-    {{ -0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
-
-    // Left face
-    {{ -0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
-    {{ -0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
-    {{ -0.5f,  0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
-    {{ -0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
-
-    // Right face
-    {{  0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
-    {{  0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
-    {{  0.5f,  0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
-    {{  0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
-
-    // Top face
-    {{ -0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
-    {{  0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
-    {{  0.5f,  0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
-    {{ -0.5f,  0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
-
-    // Bottom face
-    {{ -0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
-    {{  0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
-    {{  0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
-    {{ -0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
 };
 
 // Indices for vertices order
-std::vector<GLuint> indices = {
+std::vector<GLuint> indicesPlan = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+};
+
+
+// Peitoral
+std::vector<Vertex> verticesChest = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ -1.5f, 2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.5f, 2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.5f,  3.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  3.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{ -1.5f, 2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.5f, 2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.5f,  3.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  3.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Left face
+    {{ -1.5f, 2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ -1.5f, 2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ -1.5f,  3.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  3.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  1.5f, 2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.5f, 2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.5f,  3.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  1.5f,  3.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ -1.5f,  3.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.5f,  3.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.5f,  3.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  3.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ -1.5f, 2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.5f, 2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.5f, 2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f, 2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+// Indices for vertices order
+std::vector<GLuint> indicesChest = {
     // Front face
     0, 1, 2,
     0, 2, 3,
@@ -68,6 +88,622 @@ std::vector<GLuint> indices = {
     20, 21, 22,
     20, 22, 23
 };
+
+// 'barriga' -> refazer quase o mesmo que foi feito acima
+std::vector<Vertex> verticesHead = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ -0.5f, 3.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.5f, 3.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.5f,  4.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -0.5f,  4.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{ -0.5f, 3.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.5f, 3.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.5f,  4.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -0.5f,  4.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Left face
+    {{ -0.5f, 3.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ -0.5f, 3.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ -0.5f,  4.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -0.5f,  4.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  0.5f, 3.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.5f, 3.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.5f,  4.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  0.5f,  4.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ -0.5f,  4.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.5f,  4.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.5f,  4.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -0.5f,  4.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ -0.5f, 3.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.5f, 3.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.5f, 3.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -0.5f, 3.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesHead = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+// pescoço
+
+// 'barriga' -> refazer quase o mesmo que foi feito acima
+std::vector<Vertex> verticesStomach = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ -1.3f, -0.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.3f, -0.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.3f,  2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{ -1.3f, -0.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.3f, -0.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.3f,  2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Left face
+    {{ -1.3f, -0.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ -1.3f, -0.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ -1.3f,  2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  1.3f, -0.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.3f, -0.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.3f,  2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  1.3f,  2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ -1.3f,  2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.3f,  2.0f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.3f,  2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  2.0f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ -1.3f, -0.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.3f, -0.5f, -0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.3f, -0.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f, -0.5f,  0.75f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesStomach = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+// braço esquerdo
+std::vector<Vertex> verticesLeftArm1 = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ 1.5f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.5f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{  1.5f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  1.5f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Left face
+    {{ 1.5f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ 1.5f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ 1.5f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.5f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  2.25f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  2.25f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ 1.5f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.5f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ 1.5f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.5f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesLeftArm1 = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+std::vector<Vertex> verticesLeftArm2 = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ 1.5f, 0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f, 0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f,  1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.5f,  1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{  1.5f, 0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f, 0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f,  1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  1.5f,  1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Left face
+    {{ 1.5f, 0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ 1.5f, 0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ 1.5f,  1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.5f,  1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  2.25f, 0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f, 0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f,  1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  2.25f,  1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ 1.5f,  0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f,  0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f,  0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.5f,  0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ 1.5f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  2.25f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  2.25f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.5f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesLeftArm2 = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+// braço direito
+std::vector<Vertex> verticesRightArm1 = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ -1.5f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{  -1.5f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  -1.5f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Left face
+    {{ -1.5f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ -1.5f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ -1.5f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  -2.25f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  -2.25f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ -1.5f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f,  3.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  3.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ -1.5f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesRightArm1 = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+std::vector<Vertex> verticesRightArm2 = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ -1.5f, 0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f, 0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f,  1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{  -1.5f, 0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f, 0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f,  1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  -1.5f,  1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Left face
+    {{ -1.5f, 0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ -1.5f, 0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ -1.5f,  1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  -2.25f, 0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f, 0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f,  1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  -2.25f,  1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ -1.5f,  0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f,  0.0f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f,  0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f,  0.0f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ -1.5f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -2.25f, 1.5f, -0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -2.25f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.5f, 1.5f,  0.35f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesRightArm2 = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+// perna direita
+std::vector<Vertex> verticesRightLeg1 = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ -1.3f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{ -1.3f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+    
+    // Left face
+    {{ -1.3f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ -1.3f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ -1.3f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  -0.2f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  -0.2f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ -1.3f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ -1.3f, -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f, -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f, -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesRightLeg1 = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+std::vector<Vertex> verticesRightLeg2 = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ -1.3f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{ -1.3f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+    
+    // Left face
+    {{ -1.3f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ -1.3f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ -1.3f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  -0.2f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  -0.2f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ -1.3f,  -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f,  -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f,  -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ -1.3f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -1.3f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesRightLeg2 = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+
+//perna esquerda
+std::vector<Vertex> verticesLeftLeg1 = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ 1.3f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{ 1.3f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+    
+    // Left face
+    {{ 1.3f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ 1.3f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ 1.3f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  0.2f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  0.2f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ 1.3f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.3f,  -0.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.3f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f,  -0.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ 1.3f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f, -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesLeftLeg1 = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+std::vector<Vertex> verticesLeftLeg2 = {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    {{ 1.3f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Back face
+    {{ 1.3f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+    
+    // Left face
+    {{ 1.3f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{ 1.3f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{ 1.3f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Right face
+    {{  0.2f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{  0.2f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Top face
+    {{ 1.3f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  1.3f,  -2.5f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  1.3f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f,  -2.5f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+    // Bottom face
+    {{ 1.3f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, -5.0f, -0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 1.3f, -5.0f,  0.7f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}  // Top-left
+};
+
+std::vector<GLuint> indicesLeftLeg2 = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3,
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+    
+    // Left face
+    8, 9, 10,
+    8, 10, 11,
+    // Right face
+    12, 13, 14,
+    12, 14, 15,
+    // Top face
+    16, 17, 18,
+    16, 18, 19,
+    // Bottom face
+    20, 21, 22,
+    20, 22, 23
+};
+
+
+
 
 int main()
 {
@@ -155,8 +791,22 @@ int main()
     Texture texture("../textures/brick.png", "diffuse", 0);
     std::vector<Texture> textures = { texture };
 
+    Texture texture2("../textures/planks.png","diffuse", 0);
+    std::vector<Texture> textures2 = {texture2};
+
 	// Cria o objeto Mesh para o cubo
-    Mesh cubeMesh(vertices, indices, textures);
+    Mesh chest(verticesChest, indicesChest, textures); // aqui posso criar os outros objetos
+    Mesh stomach(verticesStomach, indicesStomach, textures);
+    Mesh plan(verticesPlan, indicesPlan, textures2);
+    Mesh head(verticesHead, indicesHead, textures2);
+    Mesh leftArm1(verticesLeftArm1, indicesLeftArm1, textures2);
+    Mesh leftArm2(verticesLeftArm2, indicesLeftArm2, textures2);
+    Mesh rightArm1(verticesRightArm1, indicesRightArm1, textures2);
+    Mesh rightArm2(verticesRightArm2, indicesRightArm2, textures2);
+    Mesh rightLeg1(verticesRightLeg1, indicesRightLeg1, textures2);
+    Mesh rightLeg2(verticesRightLeg2, indicesRightLeg2, textures2);
+    Mesh leftLeg1(verticesLeftLeg1, indicesLeftLeg1, textures2);
+    Mesh leftLeg2(verticesLeftLeg2, indicesLeftLeg2, textures2);
 
     // Main while loop
     while (!glfwWindowShouldClose(window))
@@ -170,9 +820,35 @@ int main()
         camera.Inputs(window);
         // Updates and exports the camera matrix to the Vertex Shader
         camera.updateMatrix(45.0f, 0.1f, 1000.0f);
+        
+        // Desenha os objetos
+        // Chão
+        //plan.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
-        // Desenha o cubo
-        cubeMesh.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        // Cabeça
+        head.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+        // peito
+        chest.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+        // Barriga
+        stomach.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+        // braço esquerdo
+        leftArm1.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        leftArm2.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+        //braço direito
+        rightArm1.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        rightArm2.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+        //perna direita
+        rightLeg1.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        rightLeg2.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+        //perna esquerda
+        leftLeg1.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        leftLeg2.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
         // Swap the back buffer with the front buffer
         glfwSwapBuffers(window);
