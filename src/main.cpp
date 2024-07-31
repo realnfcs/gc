@@ -2,6 +2,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <filesystem>
 #include "Mesh.h"
+#include "Model.h"
 #include <stack>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -801,9 +802,18 @@ int main()
 
     // Enables the Depth Buffer
     glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
     // Creates camera object
     Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
+
+	std::string parentDir = (fs::current_path().fs::path::parent_path()).string();
+	std::string groundPath = "/models/ground/scene.gltf";
+	std::string treesPath = "/models/trees/scene.gltf";
+
+	// Load in models
+	Model ground((parentDir + groundPath).c_str());
+	Model trees((parentDir + treesPath).c_str());
 
 	// Cria uma textura vazia
     Texture texture("../textures/brick.png", "diffuse", 0);
@@ -833,7 +843,7 @@ int main()
     // Main while loop
     while (!glfwWindowShouldClose(window))
     {
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(0.85f, 0.85f, 0.90f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         camera.Inputs(window);
@@ -847,7 +857,11 @@ int main()
         angleLeftArm -= 0.02f;
 
         // Desenha o chão
-        plan.Draw(shaderProgram, camera, model, glm::vec3(0.0f, -3.0f, 0.0), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        // plan.Draw(shaderProgram, camera, model, glm::vec3(0.0f, -3.0f, 0.0), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+		// Draw models
+		ground.Draw(shaderProgram, camera);
+		trees.Draw(shaderProgram, camera);
 
         // Desenha o corpo (peito) com rotação
         pushMatrix(model);

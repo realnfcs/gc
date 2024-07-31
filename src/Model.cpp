@@ -154,7 +154,7 @@ std::vector<float> Model::getFloats(json accessor)
 
 	// Get properties from the bufferView
 	json bufferView = JSON["bufferViews"][buffViewInd];
-	unsigned int byteOffset = bufferView.value("byteOffset", 0);
+	unsigned int byteOffset = bufferView["byteOffset"];
 
 	// Interpret the type and store it into numPerVert
 	unsigned int numPerVert;
@@ -190,7 +190,7 @@ std::vector<GLuint> Model::getIndices(json accessor)
 
 	// Get properties from the bufferView
 	json bufferView = JSON["bufferViews"][buffViewInd];
-	unsigned int byteOffset = bufferView.value("byteOffset", 0);
+	unsigned int byteOffset = bufferView["byteOffset"];
 
 	// Get indices with regards to their type: unsigned int, unsigned short, or short
 	unsigned int beginningOfData = byteOffset + accByteOffset;
@@ -257,7 +257,7 @@ std::vector<Texture> Model::getTextures()
 		if (!skip)
 		{
 			// Load diffuse texture
-			if (texPath.find("baseColor") != std::string::npos)
+			if (texPath.find("baseColor") != std::string::npos || texPath.find("diffuse") != std::string::npos)
 			{
 				Texture diffuse = Texture((fileDirectory + texPath).c_str(), "diffuse", loadedTex.size());
 				textures.push_back(diffuse);
@@ -265,7 +265,7 @@ std::vector<Texture> Model::getTextures()
 				loadedTexName.push_back(texPath);
 			}
 			// Load specular texture
-			else if (texPath.find("metallicRoughness") != std::string::npos)
+			else if (texPath.find("metallicRoughness") != std::string::npos || texPath.find("specular") != std::string::npos)
 			{
 				Texture specular = Texture((fileDirectory + texPath).c_str(), "specular", loadedTex.size());
 				textures.push_back(specular);
@@ -305,27 +305,27 @@ std::vector<Vertex> Model::assembleVertices
 std::vector<glm::vec2> Model::groupFloatsVec2(std::vector<float> floatVec)
 {
 	std::vector<glm::vec2> vectors;
-	for (int i = 0; i < floatVec.size(); i += 2)
+	for (int i = 0; i < floatVec.size(); i)
 	{
-		vectors.push_back(glm::vec2(floatVec[i+1], floatVec[i]));
+		vectors.push_back(glm::vec2(floatVec[i++], floatVec[i++]));
 	}
 	return vectors;
 }
 std::vector<glm::vec3> Model::groupFloatsVec3(std::vector<float> floatVec)
 {
 	std::vector<glm::vec3> vectors;
-	for (int i = 0; i < floatVec.size(); i += 3)
+	for (int i = 0; i < floatVec.size(); i)
 	{
-		vectors.push_back(glm::vec3(floatVec[i+2], floatVec[i+1], floatVec[i]));
+		vectors.push_back(glm::vec3(floatVec[i++], floatVec[i++], floatVec[i++]));
 	}
 	return vectors;
 }
 std::vector<glm::vec4> Model::groupFloatsVec4(std::vector<float> floatVec)
 {
 	std::vector<glm::vec4> vectors;
-	for (int i = 0; i < floatVec.size(); i += 4)
+	for (int i = 0; i < floatVec.size(); i)
 	{
-		vectors.push_back(glm::vec4(floatVec[i+3], floatVec[i+2], floatVec[i+1], floatVec[i]));
+		vectors.push_back(glm::vec4(floatVec[i++], floatVec[i++], floatVec[i++], floatVec[i++]));
 	}
 	return vectors;
 }
