@@ -2,6 +2,22 @@
 #include <SDL2/SDL_mixer.h>
 #include <filesystem>
 #include "Mesh.h"
+#include <stack>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+std::stack<glm::mat4> matrixStack;
+
+void pushMatrix(const glm::mat4& matrix) {
+    matrixStack.push(matrix);
+}
+
+glm::mat4 popMatrix() {
+    glm::mat4 top = matrixStack.top();
+    matrixStack.pop();
+    return top;
+}
 
 namespace fs = std::filesystem;
 
@@ -731,6 +747,7 @@ int main()
     }
 
     // Play music
+	/*
     if (Mix_PlayMusic(bgMusic, -1) == -1) {
         std::cerr << "Failed to play background music: " << Mix_GetError() << std::endl;
         Mix_FreeMusic(bgMusic);
@@ -738,6 +755,7 @@ int main()
         SDL_Quit();
         return -1;
     }
+	*/
 
     // Initialize GLFW
     glfwInit();
@@ -808,51 +826,87 @@ int main()
     Mesh leftLeg1(verticesLeftLeg1, indicesLeftLeg1, textures2);
     Mesh leftLeg2(verticesLeftLeg2, indicesLeftLeg2, textures2);
 
+	float angleChest = 0.0f;
+    float angleRightArm = 0.0f;
+    float angleLeftArm = 0.0f;
+
     // Main while loop
     while (!glfwWindowShouldClose(window))
     {
-        // Specify the color of the background
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        // Clean the back buffer and depth buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Handles camera inputs
         camera.Inputs(window);
-        // Updates and exports the camera matrix to the Vertex Shader
         camera.updateMatrix(45.0f, 0.1f, 1000.0f);
-        
-        // Desenha os objetos
-        // Chão
-        //plan.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
-        // Cabeça
-        head.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        glm::mat4 model = glm::mat4(1.0f);
 
-        // peito
-        chest.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        // Atualiza ângulos
+        angleChest += 0.1f;
+        angleRightArm += 0.02f;
+        angleLeftArm -= 0.02f;
 
-        // Barriga
-        stomach.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        // Desenha o chão
+        plan.Draw(shaderProgram, camera, model, glm::vec3(0.0f, -3.0f, 0.0), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
-        // braço esquerdo
-        leftArm1.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        leftArm2.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        // Desenha o corpo (peito) com rotação
+        pushMatrix(model);
+        model = glm::rotate(model, glm::radians(angleChest), glm::vec3(0.0f, 1.0f, 0.0f));
+        chest.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
-        //braço direito
-        rightArm1.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        rightArm2.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        // Desenha a cabeça
+        pushMatrix(model);
+        // Posição relativa à rotação do peito
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        head.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        model = popMatrix();
 
-        //perna direita
-        rightLeg1.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        rightLeg2.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        // Desenha os braços como filhos do peito
+        pushMatrix(model);
 
-        //perna esquerda
-        leftLeg1.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        leftLeg2.Draw(shaderProgram, camera, glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        // Desenha o braço esquerdo com rotação
+        pushMatrix(model);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // Ajuste a posição relativa ao peito
+        model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(0.0f, 0.0f, 1.0f));
+        leftArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        leftArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        model = popMatrix();
 
-        // Swap the back buffer with the front buffer
+        // Desenha o braço direito com rotação
+        pushMatrix(model);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // Ajuste a posição relativa ao peito
+        model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(0.0f, 0.0f, 1.0f));
+        rightArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        rightArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        model = popMatrix();
+
+        model = popMatrix();
+
+        // Desenha a barriga
+        pushMatrix(model);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        stomach.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+        // Desenha as pernas como filhas da barriga
+        pushMatrix(model);
+
+        // Desenha a perna direita
+        pushMatrix(model);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // Ajuste a posição relativa à barriga
+        rightLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        rightLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        model = popMatrix();
+
+        // Desenha a perna esquerda
+        pushMatrix(model);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // Ajuste a posição relativa à barriga
+        leftLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        leftLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        model = popMatrix();
+
+        model = popMatrix();
+
         glfwSwapBuffers(window);
-        // Take care of all GLFW events
         glfwPollEvents();
     }
 
