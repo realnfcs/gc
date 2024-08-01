@@ -889,8 +889,10 @@ int main()
 
 	// Load sound effects
 	Mix_Chunk* effect1 = Mix_LoadWAV("../audios/Monster_Scream_Sound_Effect _Scary_Halloween_Sounds.wav");
-	Mix_Chunk* effect2 = Mix_LoadWAV("../audios/RUNNING_IN_THE_FOREST_SOUND_EFFECTS.wav");
-	if (!effect1 || !effect2) {
+	Mix_Chunk* effect2 = Mix_LoadWAV("../audios/Footsteps_in_Forest_Sound_Effect.wav");
+	Mix_Chunk* effect3 = Mix_LoadWAV("../audios/Growling_Monster.wav");
+	Mix_Chunk* effect4 = Mix_LoadWAV("../audios/Heavy_object_Hit_and_body_thud_sound_effect_hcS.wav");
+	if (!effect1 || !effect2 || !effect3 || !effect4) {
 		std::cerr << "Failed to load sound effects: " << Mix_GetError() << std::endl;
 		Mix_FreeMusic(bgMusic);
 		Mix_CloseAudio();
@@ -910,7 +912,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create a GLFWwindow object of 800 by 800 pixels, naming it "YoutubeOpenGL"
-    GLFWwindow* window = glfwCreateWindow(width, height, "YoutubeOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(width, height, "CG", NULL, NULL);
     // Error check if the window fails to create
     if (window == NULL)
     {
@@ -944,7 +946,7 @@ int main()
 	glDepthFunc(GL_LESS);
 
     // Creates camera object
-    Camera camera(width, height, glm::vec3(0.0f, -2.5f, 2.0f));
+    Camera camera(width, height, glm::vec3(0.0f, -6.0f, 2.0f));
 
 	std::string parentDir = (fs::current_path().fs::path::parent_path()).string();
 	std::string groundPath = "/models/ground/scene.gltf";
@@ -1000,7 +1002,7 @@ int main()
     float angleLeftArm = 0.0f;
     float maxAngle = 0.0f;
     float startTime = 0.0f;
-    float durationMovement = 30.0f;
+    float durationMovement = 40.0f;
     float finalAngle;
 
 	// Parâmetros da esfera
@@ -1060,8 +1062,8 @@ int main()
 	Mesh moon(sphereVertices, sphereIndices, moonTextures);
 
 	float groundLevel = 0.0f; //-2.5f;
-	int totalSteps = 1000; // Número total de passos
-	float stepSize = 0.01f; // Tamanho de cada passo
+	int totalSteps = 1500; // Número total de passos
+	float stepSize = 0.008f; // Tamanho de cada passo
 	int stepsRemaining = totalSteps; // Passos restantes
 	bool cameraStopped = false;  // Variável para verificar se a câmera parou
 
@@ -1069,6 +1071,28 @@ int main()
 	float interpolationSpeed = 5.0f;  // Velocidade da interpolação
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
+
+	// Variáveis de controle
+	float timer = 0.0f;                // Temporizador para controlar o tempo entre rotações
+	float waitTime = 2.0f;             // Tempo de espera em segundos antes de cada rotação
+	bool rotatedRight = false;         // Flag para verificar se a câmera já rotacionou para a direita
+	bool rotatedLeft = false;          // Flag para verificar se a câmera já rotacionou para a esquerda
+	bool rotatedFront = false;         // Flag para verificar se a câmera já rotacionou de volta para frente
+	bool rotatedBack = false;          // Flag para verificar se a câmera já rotacionou para trás
+	bool renderModel = false;
+
+	// Direções alvo para as rotações
+	glm::vec3 targetOrientationRight;  // Direção para onde a câmera deve rotacionar (direita)
+	glm::vec3 targetOrientationLeft;   // Direção para onde a câmera deve rotacionar (esquerda)
+	glm::vec3 targetOrientationBack;   // Direção para onde a câmera deve rotacionar (para trás)
+
+	// Play sound effects
+	int channel1 = Mix_PlayChannel(-1, effect1, 2); // Play effect1 on any available channel
+	int channel2 = Mix_PlayChannel(-1, effect2, 0); // Play effect2 on any available channel
+	int channel3, channel4;
+	Mix_Volume(channel1, MIX_MAX_VOLUME / 8);  // Diminui o volume do canal pela metade
+	Mix_Volume(channel2, MIX_MAX_VOLUME / 8);  // Diminui o volume do canal pela metade
+
 
     // Main while loop
     while (!glfwWindowShouldClose(window))
@@ -1080,14 +1104,8 @@ int main()
     	deltaTime = currentFrame - lastFrame;
     	lastFrame = currentFrame;
 
-		// Play sound effects
-		int channel1 = Mix_PlayChannel(-1, effect1, 0); // Play effect1 on any available channel
-		int channel2 = Mix_PlayChannel(-1, effect2, 0); // Play effect2 on any available channel
-		Mix_Volume(channel1, MIX_MAX_VOLUME / 8);  // Diminui o volume do canal pela metade
-		Mix_Volume(channel2, MIX_MAX_VOLUME / 8);  // Diminui o volume do canal pela metade
-
         camera.Inputs(window);
-        camera.updateMatrix(45.0f, 0.1f, 1000.0f);
+        camera.updateMatrix(90.0f, 0.1f, 1000.0f);
 
 		// Verificação para impedir a câmera de atravessar o chão
 		if (camera.Position.y > groundLevel)
@@ -1096,7 +1114,7 @@ int main()
 		}
 
 		// Movimenta a câmera para frente por um número x de passos
-    	if (stepsRemaining > 0)
+		if (stepsRemaining > 0)
 		{
 			// Move a câmera na direção para frente (camera.Orientation)
 			camera.Position += camera.Orientation * stepSize;
@@ -1105,26 +1123,67 @@ int main()
 			// Se ainda não está parada, verifique se devemos parar
 			if (stepsRemaining == 0) {
 				cameraStopped = true;
+				timer = 0.0f;  // Resetar o temporizador
 			}
 		}
-		
-		// Se a câmera parou, ajusta a orientação para olhar para o lado
-		if (cameraStopped) {
-			
-			// Ajusta a orientação para olhar para a direita, por exemplo
-			// O vetor de orientação da câmera deve ser ajustado conforme a necessidade
-			camera.Orientation = glm::normalize(glm::mix(camera.Orientation, targetOrientation, interpolationSpeed * deltaTime));
 
-			// Opcional: Adicione uma lógica para resetar a câmera ou continuar com um novo movimento
-			// Por exemplo, você pode querer começar a movimentação novamente ou implementar uma lógica de movimento alternativo
+		// Se a câmera parou, gerencie a rotação para direita, esquerda e para trás
+		if (cameraStopped) {
+
+			if (!rotatedRight) {
+				// Ajusta a orientação para olhar para a direita
+				targetOrientationRight = glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f)); // Exemplo de direção à direita
+				camera.Orientation = glm::normalize(glm::mix(camera.Orientation, targetOrientationRight, interpolationSpeed * deltaTime));
+
+				// Verifica se a rotação para direita foi concluída
+				if (glm::distance(camera.Orientation, targetOrientationRight) < 0.01f) {
+					rotatedRight = true;
+					timer = 0.0f;  // Resetar o temporizador para a próxima rotação
+				}
+			} else if (rotatedRight && !rotatedLeft) {
+				// Inicia o temporizador para a rotação à esquerda
+				timer += deltaTime;
+
+				if (timer >= waitTime) {
+					// Ajusta a orientação para olhar para a esquerda
+					targetOrientationLeft = glm::normalize(glm::vec3(-1.0f, 0.0f, 0.0f)); // Exemplo de direção à esquerda
+					camera.Orientation = glm::normalize(glm::mix(camera.Orientation, targetOrientationLeft, interpolationSpeed * deltaTime));
+					
+					// Verifica se a rotação para esquerda foi concluída
+					if (glm::distance(camera.Orientation, targetOrientationLeft) < 0.01f) {
+						rotatedLeft = true;
+						renderModel = true;
+
+						timer = 0.0f;  // Resetar o temporizador para a próxima rotação
+					}
+				}
+			} else if (rotatedLeft && !rotatedBack) {
+				// Inicia o temporizador para a rotação para trás
+				timer += deltaTime;
+
+				if (timer >= waitTime) {
+					// Ajusta a orientação para olhar para trás
+					targetOrientationBack = glm::normalize(glm::vec3(0.0f, -0.5f, 1.0f)); // Exemplo de direção para trás
+					camera.Orientation = glm::normalize(glm::mix(camera.Orientation, targetOrientationBack, interpolationSpeed * deltaTime));
+					
+					// Verifica se a rotação para trás foi concluída
+					if (glm::distance(camera.Orientation, targetOrientationBack) < 0.01f) {
+						rotatedBack = true;
+
+						// Opcional: Lógica para o que fazer após a rotação para trás ser concluída
+						// Por exemplo, resetar flags, iniciar um novo movimento, etc.
+					}
+				}
+			}
 		}
+
 
         glm::mat4 model = glm::mat4(1.0f);
 
         // Atualiza ângulos
-        angleChest += 0.5f;
-        angleRightArm += 0.5f;
-        angleLeftArm += 0.5f;
+        angleChest += 0.1f;
+        angleRightArm += 0.1f;
+        angleLeftArm += 0.1f;
 
 		float currentTimeMovement = glfwGetTime();
         float elapsedTimeMovement = currentTimeMovement - startTime;
@@ -1135,125 +1194,143 @@ int main()
 		ground.Draw(shaderProgram, camera);
 		trees.Draw(shaderProgram, camera);
 
-        // Desenha o corpo (peito) com rotação
-        pushMatrix(model); // { peito
-        //model = glm::rotate(model, glm::radians(angleChest), glm::vec3(0.0f, 1.0f, 0.0f));
-        //model = glm::translate(model, glm::vec3(angleLeftArm, 0.0f, 0.0f)); 
-		model = glm::translate(model, glm::vec3(0.0f, 6.0f, 0.0f));
-        chest.Draw(shaderProgram, camera, model, glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+		if (renderModel) {
 
-            // Desenha a cabeça
-            pushMatrix(model); // { cabeça
-            // Posição relativa à rotação do peito
-            head.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-            eye.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-            model = popMatrix(); // }cabeça
+			// Desenha o corpo (peito) com rotação
+			pushMatrix(model); // { peito
+			//model = glm::rotate(model, glm::radians(angleChest), glm::vec3(0.0f, 1.0f, 0.0f));
+			//model = glm::translate(model, glm::vec3(angleLeftArm, 0.0f, 0.0f)); 
+			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-            // Desenha os braços como filhos do peito
-            pushMatrix(model); //{braços
-                // Desenha o braço esquerdo com rotação
-                pushMatrix(model); //{braço esquerdo
-    
-                model = glm::translate(model, glm::vec3(0.0f, 3.5f, 0.0f)); // Ajuste a posição relativa ao peito
-                if(elapsedTimeMovement < durationMovement){
-                    angleLeftArm = elapsedTimeMovement * 5;
-                    model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
-                }else{
-                    //finalAngle = duration * 10;
-                    //angleRightArm = finalAngle;
-                    model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
-                    if (angleLeftArm > 2){
-                        angleLeftArm-=5.0;
-                    }
-                    else{
-                        angleLeftArm = 0.0f;
-                    }
-                }
-                model = glm::translate(model, glm::vec3(0.0f, -3.5f, 0.0f));
-                leftArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-                    pushMatrix(model);// {antebraço esquerdo
-                        model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0f)); 
-                        model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
-                        model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f)); 
-                        leftArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-                    model = popMatrix(); // }antebraço esquerdo
-                model = popMatrix(); // }braço esquerdo
-            
+			model = glm::translate(model, glm::vec3(0.0f, 6.0f, -6.0f));
+			
+			chest.Draw(shaderProgram, camera, model, glm::vec3(0.0f, 0.0f, 0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
-            // Desenha o braço direito com rotação
-            pushMatrix(model); //{braço direito
-                model = glm::translate(model, glm::vec3(0.0f, 3.5f, 0.0f)); // Ajuste a posição relativa ao peito
-                if(elapsedTimeMovement < durationMovement){
-                    angleRightArm = elapsedTimeMovement * 5;
-                    model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
-                }else{
-                    //finalAngle = duration * 10;
-                    //angleRightArm = finalAngle
-                    model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
-                    if (angleRightArm > 2){
-                        angleRightArm-=5.0;
-                    }
-                    else{
-                        angleRightArm = 0.0f;
-                    }
-                }
-                model = glm::translate(model, glm::vec3(0.0f, -3.5f, 0.0f)); 
-                rightArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-                pushMatrix(model);
-                    model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0f)); // Ajuste a posição relativa ao peito
-                    model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
-                    model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f)); 
-                    rightArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-                model = popMatrix();
-            model = popMatrix(); //}braço direito
-        model = popMatrix(); // } braços
+				// Desenha a cabeça
+				pushMatrix(model); // { cabeça
+				// Posição relativa à rotação do peito
+				head.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+				eye.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+				model = popMatrix(); // }cabeça
 
-        // Desenha a barriga
-        pushMatrix(model); // { barriga
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-        stomach.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        mouthLeft.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        mouthRight.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        mouthTop.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+				// Desenha os braços como filhos do peito
+				pushMatrix(model); //{braços
+					// Desenha o braço esquerdo com rotação
+					pushMatrix(model); //{braço esquerdo
+		
+					model = glm::translate(model, glm::vec3(0.0f, 3.5f, 0.0f)); // Ajuste a posição relativa ao peito
+					if(elapsedTimeMovement < durationMovement){
+						angleLeftArm = elapsedTimeMovement * 5;
+						model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
+					}else{
+						//finalAngle = duration * 10;
+						//angleRightArm = finalAngle;
+						model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
+						if (angleLeftArm > 2){
+							angleLeftArm-=5.0;
+						}
+						else{
+							angleLeftArm = 0.0f;
+						}
+					}
+					model = glm::translate(model, glm::vec3(0.0f, -3.5f, 0.0f));
+					leftArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+						pushMatrix(model);// {antebraço esquerdo
+							model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0f)); 
+							model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
+							model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f)); 
+							leftArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+						model = popMatrix(); // }antebraço esquerdo
+					model = popMatrix(); // }braço esquerdo
+				
 
-        // Desenha as pernas como filhas da barriga
-        pushMatrix(model); // { pernas
+				// Desenha o braço direito com rotação
+				pushMatrix(model); //{braço direito
+					model = glm::translate(model, glm::vec3(0.0f, 3.5f, 0.0f)); // Ajuste a posição relativa ao peito
+					if(elapsedTimeMovement < durationMovement){
+						angleRightArm = elapsedTimeMovement * 5;
+						model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
+					}else{
+						//finalAngle = duration * 10;
+						//angleRightArm = finalAngle
+						model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
+						if (angleRightArm > 2){
+							angleRightArm-=5.0;
+						}
+						else{
+							angleRightArm = 0.0f;
+							glClearColor(1.0f, 0.0f, 0.0f, 1.0f); // Define a cor de fundo como vermelha
+        					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Limpa a tela
+						
+							targetOrientation = glm::normalize(glm::vec3(-10.0f, -10.0f, -10.0f)); // Exemplo de direção para trás
+							camera.Orientation = glm::normalize(targetOrientation);														
+						}
+					}
+					model = glm::translate(model, glm::vec3(0.0f, -3.5f, 0.0f)); 
+					rightArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+					pushMatrix(model);
+						model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0f)); // Ajuste a posição relativa ao peito
+						model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
+						model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f)); 
+						rightArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+					model = popMatrix();
+				model = popMatrix(); //}braço direito
+			model = popMatrix(); // } braços
 
-        // Desenha a perna direita
-        pushMatrix(model); // { perna direita
-            model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f)); // Ajuste a posição relativa à barriga
-            model = glm::rotate(model, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            model = glm::rotate(model, glm::radians(-10.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-            model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f)); 
-            rightLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-                pushMatrix(model);
-                    model = glm::translate(model, glm::vec3(0.0f, -2.5f, 0.0f)); // Ajuste a posição relativa à barriga
-                    model = glm::rotate(model, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-                    model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.0f)); 
-                    rightLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-                model = popMatrix();
-        model = popMatrix(); // } perna direita
+			// Desenha a barriga
+			pushMatrix(model); // { barriga
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+			stomach.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+			mouthLeft.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+			mouthRight.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+			mouthTop.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
-        // Desenha a perna esquerda
-        pushMatrix(model); // { perna esquerda
-        model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f)); // Ajuste a posição relativa à barriga
-        model = glm::rotate(model, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::rotate(model, glm::radians(10.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-        model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f)); 
-        leftLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-            pushMatrix(model);
-                model = glm::translate(model, glm::vec3(0.0f, -2.5f, 0.0f)); // Ajuste a posição relativa à barriga
-                model = glm::rotate(model, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-                model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.0f)); 
-                leftLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-            model = popMatrix();
-        model = popMatrix(); // } perna esquerda
+			// Desenha as pernas como filhas da barriga
+			pushMatrix(model); // { pernas
 
-        model = popMatrix(); //}pernas
+			// Desenha a perna direita
+			pushMatrix(model); // { perna direita
+				model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f)); // Ajuste a posição relativa à barriga
+				model = glm::rotate(model, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+				model = glm::rotate(model, glm::radians(-10.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+				model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f)); 
+				rightLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+					pushMatrix(model);
+						model = glm::translate(model, glm::vec3(0.0f, -2.5f, 0.0f)); // Ajuste a posição relativa à barriga
+						model = glm::rotate(model, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+						model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.0f)); 
+						rightLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+					model = popMatrix();
+			model = popMatrix(); // } perna direita
 
-        model = popMatrix(); // } barriga
+			// Desenha a perna esquerda
+			pushMatrix(model); // { perna esquerda
+			model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f)); // Ajuste a posição relativa à barriga
+			model = glm::rotate(model, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(10.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+			model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f)); 
+			leftLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+				pushMatrix(model);
+					model = glm::translate(model, glm::vec3(0.0f, -2.5f, 0.0f)); // Ajuste a posição relativa à barriga
+					model = glm::rotate(model, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+					model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.0f)); 
+					leftLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+				model = popMatrix();
+			model = popMatrix(); // } perna esquerda
 
-        model = popMatrix();
+			model = popMatrix(); //}pernas
+
+			model = popMatrix(); // } barriga
+
+			model = popMatrix();
+
+			// Play sound effects
+			channel3 = Mix_PlayChannel(-1, effect3, 0); 
+			channel4 = Mix_PlayChannel(-1, effect4, 0);
+			Mix_Volume(channel3, MIX_MAX_VOLUME / 8);  // Diminui o volume do canal pela metade
+			Mix_Volume(channel4, MIX_MAX_VOLUME / 8);  // Diminui o volume do canal pela metade
+
+		} 
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -1269,6 +1346,8 @@ int main()
 	// Free resources before quitting
 	Mix_FreeChunk(effect1);
 	Mix_FreeChunk(effect2);
+	Mix_FreeChunk(effect3);
+	Mix_FreeChunk(effect4);
     // Free resources and quit SDL
     Mix_FreeMusic(bgMusic);
     Mix_CloseAudio();
