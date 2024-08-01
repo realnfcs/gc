@@ -6,6 +6,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <cmath>
+#include <chrono>
+
 
 std::stack<glm::mat4> matrixStack;
 
@@ -39,9 +42,26 @@ std::vector<Vertex> verticesPlan = {
 std::vector<GLuint> indicesPlan = {
     // Front face
     0, 1, 2,
-    0, 2, 3,
+    0, 2, 3
 };
 
+std::vector<Vertex> verticesEye= {
+    // Front face
+    //       posição             vetor normal            cor                 textura
+    // Back face
+    {{ -0.3f, 3.7f, -0.51f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.3f, 3.7f, -0.51f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.3f,  4.3f, -0.51f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -0.3f,  4.3f, -0.51f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+};
+
+// Indices for vertices order
+std::vector<GLuint> indicesEye = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3
+};
 
 // Peitoral
 std::vector<Vertex> verticesChest = {
@@ -114,7 +134,6 @@ std::vector<Vertex> verticesHead = {
     {{  0.5f,  4.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
     {{ -0.5f,  4.5f,  0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
 
-    // Back face
     {{ -0.5f, 3.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
     {{  0.5f, 3.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
     {{  0.5f,  4.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
@@ -228,6 +247,58 @@ std::vector<GLuint> indicesStomach = {
     20, 21, 22,
     20, 22, 23
 };
+
+std::vector<Vertex> verticesMouthLeft= {
+    //       posição             vetor normal            cor                 textura
+    // Back face
+    {{ -0.6f, 0.0f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  -0.2f, 0.0f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  -0.2f,  1.6f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -0.6f,  1.6f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+};
+
+// Indices for vertices order
+std::vector<GLuint> indicesMouthLeft = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3
+};
+
+std::vector<Vertex> verticesMouthRight= {
+    //       posição             vetor normal            cor                 textura
+    // Back face
+    {{ 0.6f, 0.0f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, 0.0f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f,  1.6f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ 0.6f,  1.6f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+};
+
+// Indices for vertices order
+std::vector<GLuint> indicesMouthRight = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3
+};
+
+std::vector<Vertex> verticesMouthTop= {
+    //       posição             vetor normal            cor                 textura
+    // Back face
+    {{ -0.2f, 0.0f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 0.0f }}, // Bottom-left
+    {{  0.2f, 0.0f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 0.0f }}, // Bottom-right
+    {{  0.2f, 1.6f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {1.0f, 1.0f }}, // Top-right
+    {{ -0.2f,  1.6f, -0.76f}, {0.0f, 0.0f, -1.0f}, {0.83f, 0.70f, 0.44f},  {0.0f, 1.0f }}, // Top-left
+
+};
+
+// Indices for vertices order
+std::vector<GLuint> indicesMouthTop = {
+    // Front face
+    0, 1, 2,
+    0, 2, 3
+};
+
 
 // braço esquerdo
 std::vector<Vertex> verticesLeftArm1 = {
@@ -719,8 +790,6 @@ std::vector<GLuint> indicesLeftLeg2 = {
 };
 
 
-
-
 int main()
 {
 	
@@ -812,23 +881,43 @@ int main()
     Texture texture2("../textures/planks.png","diffuse", 0);
     std::vector<Texture> textures2 = {texture2};
 
+    Texture textureEye("../textures/redEye.png","diffuse", 0);
+    std::vector<Texture> texturesEye = {textureEye};
+
+    Texture textureFur("../textures/pelo1.jpg","diffuse", 0);
+    std::vector<Texture> furTexture = {textureFur};
+
+    Texture textureMouth("../textures/dentes2.jpeg","diffuse", 0);
+    std::vector<Texture> mouthTexture = {textureMouth};
+
+    Texture textureMouthTopBottom("../textures/blackImage.jpg","diffuse", 0);
+    std::vector<Texture> mouthTextureTB = {textureMouthTopBottom};
+
 	// Cria o objeto Mesh para o cubo
-    Mesh chest(verticesChest, indicesChest, textures); // aqui posso criar os outros objetos
-    Mesh stomach(verticesStomach, indicesStomach, textures);
+    Mesh chest(verticesChest, indicesChest, furTexture); // aqui posso criar os outros objetos
+    Mesh stomach(verticesStomach, indicesStomach, furTexture);
     Mesh plan(verticesPlan, indicesPlan, textures2);
-    Mesh head(verticesHead, indicesHead, textures2);
-    Mesh leftArm1(verticesLeftArm1, indicesLeftArm1, textures2);
-    Mesh leftArm2(verticesLeftArm2, indicesLeftArm2, textures2);
-    Mesh rightArm1(verticesRightArm1, indicesRightArm1, textures2);
-    Mesh rightArm2(verticesRightArm2, indicesRightArm2, textures2);
-    Mesh rightLeg1(verticesRightLeg1, indicesRightLeg1, textures2);
-    Mesh rightLeg2(verticesRightLeg2, indicesRightLeg2, textures2);
-    Mesh leftLeg1(verticesLeftLeg1, indicesLeftLeg1, textures2);
-    Mesh leftLeg2(verticesLeftLeg2, indicesLeftLeg2, textures2);
+    Mesh head(verticesHead, indicesHead, furTexture);
+    Mesh eye(verticesEye, indicesEye, texturesEye);
+    Mesh mouthLeft(verticesMouthLeft, indicesMouthLeft, mouthTexture);
+    Mesh mouthRight(verticesMouthRight, indicesMouthRight, mouthTexture);
+    Mesh mouthTop(verticesMouthTop, indicesMouthTop, mouthTextureTB);
+    Mesh leftArm1(verticesLeftArm1, indicesLeftArm1, furTexture);
+    Mesh leftArm2(verticesLeftArm2, indicesLeftArm2, furTexture);
+    Mesh rightArm1(verticesRightArm1, indicesRightArm1, furTexture);
+    Mesh rightArm2(verticesRightArm2, indicesRightArm2, furTexture);
+    Mesh rightLeg1(verticesRightLeg1, indicesRightLeg1, furTexture);
+    Mesh rightLeg2(verticesRightLeg2, indicesRightLeg2, furTexture);
+    Mesh leftLeg1(verticesLeftLeg1, indicesLeftLeg1, furTexture);
+    Mesh leftLeg2(verticesLeftLeg2, indicesLeftLeg2, furTexture);
 
 	float angleChest = 0.0f;
     float angleRightArm = 0.0f;
     float angleLeftArm = 0.0f;
+    float maxAngle = 0.0f;
+    float startTime = 0.0f;
+    float durationMovement = 5.0f;
+    float finalAngle;
 
     // Main while loop
     while (!glfwWindowShouldClose(window))
@@ -839,70 +928,136 @@ int main()
         camera.Inputs(window);
         camera.updateMatrix(45.0f, 0.1f, 1000.0f);
 
+
         glm::mat4 model = glm::mat4(1.0f);
 
         // Atualiza ângulos
         angleChest += 0.1f;
-        angleRightArm += 0.02f;
-        angleLeftArm -= 0.02f;
+        angleRightArm += 0.1f;
+        angleLeftArm += 0.1f;
 
         // Desenha o chão
-        plan.Draw(shaderProgram, camera, model, glm::vec3(0.0f, -3.0f, 0.0), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        //plan.Draw(shaderProgram, camera, model, glm::vec3(0.0f, -3.0f, 0.0), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+
+        float currentTimeMovement = glfwGetTime();
+        float elapsedTimeMovement = currentTimeMovement - startTime;
 
         // Desenha o corpo (peito) com rotação
-        pushMatrix(model);
-        model = glm::rotate(model, glm::radians(angleChest), glm::vec3(0.0f, 1.0f, 0.0f));
+        pushMatrix(model); // { peito
+        //model = glm::rotate(model, glm::radians(angleChest), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::translate(model, glm::vec3(angleLeftArm, 0.0f, 0.0f)); 
         chest.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
-        // Desenha a cabeça
-        pushMatrix(model);
-        // Posição relativa à rotação do peito
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-        head.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        model = popMatrix();
+            // Desenha a cabeça
+            pushMatrix(model); // { cabeça
+            // Posição relativa à rotação do peito
+            head.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+            eye.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+            model = popMatrix(); // }cabeça
 
-        // Desenha os braços como filhos do peito
-        pushMatrix(model);
+            // Desenha os braços como filhos do peito
+            pushMatrix(model); //{braços
+                // Desenha o braço esquerdo com rotação
+                pushMatrix(model); //{braço esquerdo
+    
+                model = glm::translate(model, glm::vec3(0.0f, 3.5f, 0.0f)); // Ajuste a posição relativa ao peito
+                if(elapsedTimeMovement < durationMovement){
+                    angleLeftArm = elapsedTimeMovement * 30;
+                    model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
+                }else{
+                    //finalAngle = duration * 10;
+                    //angleRightArm = finalAngle;
+                    model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
+                    if (angleLeftArm > 2){
+                        angleLeftArm-=5.0;
+                    }
+                    else{
+                        angleLeftArm = 0.0f;
+                    }
+                }
+                model = glm::translate(model, glm::vec3(0.0f, -3.5f, 0.0f));
+                leftArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+                    pushMatrix(model);// {antebraço esquerdo
+                        model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0f)); 
+                        model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(1.0f, 0.0f, 0.0f));
+                        model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f)); 
+                        leftArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+                    model = popMatrix(); // }antebraço esquerdo
+                model = popMatrix(); // }braço esquerdo
+            
 
-        // Desenha o braço esquerdo com rotação
-        pushMatrix(model);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // Ajuste a posição relativa ao peito
-        model = glm::rotate(model, glm::radians(angleLeftArm), glm::vec3(0.0f, 0.0f, 1.0f));
-        leftArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        leftArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        model = popMatrix();
-
-        // Desenha o braço direito com rotação
-        pushMatrix(model);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // Ajuste a posição relativa ao peito
-        model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(0.0f, 0.0f, 1.0f));
-        rightArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        rightArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        model = popMatrix();
-
-        model = popMatrix();
+            // Desenha o braço direito com rotação
+            pushMatrix(model); //{braço direito
+                model = glm::translate(model, glm::vec3(0.0f, 3.5f, 0.0f)); // Ajuste a posição relativa ao peito
+                if(elapsedTimeMovement < durationMovement){
+                    angleRightArm = elapsedTimeMovement * 30;
+                    model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
+                }else{
+                    //finalAngle = duration * 10;
+                    //angleRightArm = finalAngle
+                    model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
+                    if (angleRightArm > 2){
+                        angleRightArm-=5.0;
+                    }
+                    else{
+                        angleRightArm = 0.0f;
+                    }
+                }
+                model = glm::translate(model, glm::vec3(0.0f, -3.5f, 0.0f)); 
+                rightArm1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+                pushMatrix(model);
+                    model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0f)); // Ajuste a posição relativa ao peito
+                    model = glm::rotate(model, glm::radians(angleRightArm), glm::vec3(1.0f, 0.0f, 0.0f));
+                    model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f)); 
+                    rightArm2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+                model = popMatrix();
+            model = popMatrix(); //}braço direito
+        model = popMatrix(); // } braços
 
         // Desenha a barriga
-        pushMatrix(model);
+        pushMatrix(model); // { barriga
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         stomach.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        mouthLeft.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        mouthRight.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+        mouthTop.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
 
         // Desenha as pernas como filhas da barriga
-        pushMatrix(model);
+        pushMatrix(model); // { pernas
 
         // Desenha a perna direita
-        pushMatrix(model);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // Ajuste a posição relativa à barriga
-        rightLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        rightLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        model = popMatrix();
+        pushMatrix(model); // { perna direita
+            model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f)); // Ajuste a posição relativa à barriga
+            model = glm::rotate(model, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            model = glm::rotate(model, glm::radians(-10.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+            model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f)); 
+            rightLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+                pushMatrix(model);
+                    model = glm::translate(model, glm::vec3(0.0f, -2.5f, 0.0f)); // Ajuste a posição relativa à barriga
+                    model = glm::rotate(model, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+                    model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.0f)); 
+                    rightLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+                model = popMatrix();
+        model = popMatrix(); // } perna direita
 
         // Desenha a perna esquerda
-        pushMatrix(model);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // Ajuste a posição relativa à barriga
+        pushMatrix(model); // { perna esquerda
+        model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f)); // Ajuste a posição relativa à barriga
+        model = glm::rotate(model, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(10.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f)); 
         leftLeg1.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        leftLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
-        model = popMatrix();
+            pushMatrix(model);
+                model = glm::translate(model, glm::vec3(0.0f, -2.5f, 0.0f)); // Ajuste a posição relativa à barriga
+                model = glm::rotate(model, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+                model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.0f)); 
+                leftLeg2.Draw(shaderProgram, camera, model, glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.0f, 1.0f));
+            model = popMatrix();
+        model = popMatrix(); // } perna esquerda
+
+        model = popMatrix(); //}pernas
+
+        model = popMatrix(); // } barriga
 
         model = popMatrix();
 
